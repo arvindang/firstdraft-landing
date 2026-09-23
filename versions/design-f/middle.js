@@ -78,19 +78,19 @@
     if (!enabled) {
       outputControllers.forEach((controller) => controller.destroy());
       outputControllers = [];
-      outputVideos.forEach((video) => video.controls = true);
-      if (outputInstruction) outputInstruction.textContent = "PLAY THE SAMPLE FILMS";
+      outputVideos.forEach((video, index) => video.controls = index === 0);
+      if (outputInstruction) outputInstruction.textContent = "PLAY THE SAMPLE VIDEO";
       setOutputProgress(0);
       return;
     }
     if (outputControllers.length) return;
-    if (outputInstruction) outputInstruction.textContent = "SCROLL TO SCRUB BOTH FILMS";
+    if (outputInstruction) outputInstruction.textContent = "SCROLL TO SCRUB BOTH VIEWS";
     outputControllers = outputVideos.map((video, index) => window.ScrollVideoScrubber.createVideoScrubber({
       root: outputRunway,
       sticky: outputStage,
       video,
       onProgress: index === 0 ? setOutputProgress : undefined,
-      onError: () => { video.controls = true; }
+      onError: () => { video.controls = index === 0; }
     }));
   }
 

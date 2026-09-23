@@ -5,6 +5,11 @@
   color: #292b2b;
 }
 
+@media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
+  .thread-section.is-thread-enhanced { height: 210svh; padding: 0; }
+  .thread-section.is-thread-enhanced .thread-sticky { position: sticky; top: 0; height: 100svh; }
+}
+
 .thread-sticky {
   position: relative;
   display: flex;
@@ -53,8 +58,8 @@
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 12px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -68,7 +73,8 @@
 
 .thread-step:nth-child(even) { margin-top: 64px; }
 .thread-step.is-active { opacity: 1; transform: translateY(-4px); }
-.thread-step.is-passed { opacity: .82; }
+.thread-step.is-passed { opacity: 1; }
+.thread-step.is-passed .thread-mark { border-color: #bda594; background: #fffaf3; }
 
 .thread-mark {
   display: grid;
@@ -95,6 +101,10 @@
 .thread-mini-screen { display: grid; width: 32px; height: 26px; gap: 3px; padding: 5px; border: 1px solid currentColor; border-radius: 3px; }
 .thread-mini-screen i { display: block; height: 3px; background: currentColor; opacity: .65; }
 .thread-mini-screen i:last-child { width: 65%; }
+.thread-mini-phones { display: flex; align-items: center; padding-left: 5px; }
+.thread-mini-phones i { display: block; width: 17px; height: 29px; border: 1px solid currentColor; border-radius: 4px; background: #f9f6ef; }
+.thread-mini-phones i + i { margin-left: -4px; margin-top: 6px; }
+.thread-mini-phones i::after { content: ""; display: block; width: 5px; height: 1px; margin: 3px auto; background: currentColor; }
 @keyframes thread-blink { 50% { opacity: 0; } }
 
 @media (max-width: 900px) {

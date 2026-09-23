@@ -7,6 +7,7 @@
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const compact = window.matchMedia('(max-width: 900px)');
+  section.classList.add('is-thread-enhanced');
   const draw = window.SVG().addTo(host).size('100%', '100%');
   let drawnPath;
   let pathLength = 1;
@@ -41,8 +42,9 @@
 
   const update = () => {
     const rect = section.getBoundingClientRect();
-    const travel = Math.max(1, rect.height + window.innerHeight * .45);
-    const progress = reducedMotion.matches || compact.matches ? 1 : Math.min(1, Math.max(0, (window.innerHeight * .72 - rect.top) / travel));
+    const stickyHeight = section.querySelector('.thread-sticky').getBoundingClientRect().height;
+    const travel = Math.max(1, rect.height - stickyHeight);
+    const progress = reducedMotion.matches || compact.matches ? 1 : Math.min(1, Math.max(0, -rect.top / travel));
     drawnPath?.attr({ 'stroke-dashoffset': pathLength * (1 - progress) });
     const active = Math.min(steps.length - 1, Math.floor(progress * steps.length));
     steps.forEach((step, index) => {
@@ -61,4 +63,5 @@
   reducedMotion.addEventListener('change', redraw);
   compact.addEventListener('change', redraw);
   redraw();
+  document.fonts?.ready.then(redraw);
 })();

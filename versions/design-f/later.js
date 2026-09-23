@@ -69,3 +69,45 @@
   wideLayout.addEventListener("change", scheduleUpdate);
   updateScenes();
 })();
+
+(() => {
+  const section = document.querySelector("[data-capabilities]");
+  if (!section) return;
+
+  const grid = section.querySelector(".capabilities-grid");
+  const choices = [...section.querySelectorAll("[data-capability-choice]")];
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const stickyLayout = window.matchMedia("(min-width: 1101px) and (min-height: 850px)");
+  const thresholds = [.18, .34, .51, .68];
+  let furthestProgress = 0;
+  let scheduled = false;
+
+  const clamp = (value) => Math.min(1, Math.max(0, value));
+  const update = () => {
+    scheduled = false;
+    const rect = section.getBoundingClientRect();
+    const currentProgress = stickyLayout.matches ? clamp(-rect.top / Math.max(1, rect.height - window.innerHeight)) : 0;
+    furthestProgress = Math.max(furthestProgress, currentProgress);
+
+    let selectedCount = 0;
+    choices.forEach((choice, index) => {
+      const selected = choice.classList.contains("is-selected") || reduceMotion.matches ||
+        (stickyLayout.matches ? furthestProgress >= thresholds[index] : choice.getBoundingClientRect().top <= window.innerHeight * .72);
+      choice.classList.toggle("is-selected", selected);
+      if (selected) selectedCount += 1;
+    });
+    grid.classList.toggle("has-choices", selectedCount > 0);
+  };
+
+  const scheduleUpdate = () => {
+    if (scheduled) return;
+    scheduled = true;
+    requestAnimationFrame(update);
+  };
+
+  window.addEventListener("scroll", scheduleUpdate, { passive: true });
+  window.addEventListener("resize", scheduleUpdate);
+  reduceMotion.addEventListener("change", scheduleUpdate);
+  stickyLayout.addEventListener("change", scheduleUpdate);
+  update();
+})();

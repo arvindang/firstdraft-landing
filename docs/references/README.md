@@ -1,6 +1,6 @@
 # Reference captures
 
-These images record the staging pages reviewed on September 23, 2026 at 1440px and 390px widths. They are evidence for the redesign brief, not implementation targets.
+These images record the staging pages reviewed on September 23, 2026 at 1440px and 390px widths. They are evidence for the redesign brief, not implementation targets. The browser captures now live locally in the git-ignored `../../captures/staging/` folder, rather than in the repository. Save new review screenshots under `../../captures/` too.
 
 - `homepage-desktop-2026-09-23.png`
 - `homepage-mobile-2026-09-23.png`

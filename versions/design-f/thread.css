@@ -1,0 +1,117 @@
+.thread-section {
+  position: relative;
+  padding: clamp(90px, 9vw, 140px) 0;
+  background: #eeeae3;
+  color: #292b2b;
+}
+
+.thread-sticky {
+  position: relative;
+  display: flex;
+  min-height: 0;
+  align-items: center;
+  overflow: hidden;
+}
+
+.thread-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(250px, 390px);
+  gap: 40px;
+  align-items: end;
+  margin-bottom: clamp(48px, 7vh, 90px);
+}
+
+.thread-heading h2 {
+  max-width: 680px;
+  margin: 0;
+  font: 400 clamp(2.3rem, 3.4vw, 3.8rem)/1 var(--font-heading);
+  letter-spacing: -.045em;
+}
+.thread-heading .eyebrow { color: #a65d46; }
+
+.thread-heading > p:last-child {
+  max-width: 350px;
+  margin: 0 0 4px;
+  color: #6b6c68;
+  font-size: .92rem;
+  line-height: 1.6;
+}
+
+.thread-track {
+  position: relative;
+  min-height: 305px;
+}
+
+.thread-svg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.thread-steps {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.thread-step {
+  max-width: 220px;
+  opacity: .52;
+  transition: opacity .35s ease, transform .35s ease;
+}
+
+.thread-step:nth-child(even) { margin-top: 64px; }
+.thread-step.is-active { opacity: 1; transform: translateY(-4px); }
+.thread-step.is-passed { opacity: .82; }
+
+.thread-mark {
+  display: grid;
+  width: 66px;
+  height: 66px;
+  place-items: center;
+  margin-bottom: 30px;
+  border: 1px solid #c8c1b7;
+  border-radius: 18px;
+  background: #f9f6ef;
+  box-shadow: 0 8px 25px rgba(47, 39, 31, .06);
+  color: #a65d46;
+  font: 500 1.3rem/1 var(--font-mono);
+}
+
+.thread-step.is-active .thread-mark { border-color: #aa6a50; box-shadow: 0 0 0 5px rgba(166, 93, 70, .1); }
+.thread-step small { color: #a65d46; font: 500 .59rem/1.3 var(--font-mono); letter-spacing: .1em; }
+.thread-step h3 { margin: 11px 0 8px; font: 500 1.25rem/1.05 var(--font-heading); }
+.thread-step p { margin: 0; color: #6b6c68; font-size: .76rem; line-height: 1.55; }
+.thread-caret { width: 2px; height: 23px; margin-left: -15px; background: currentColor; animation: thread-blink .85s steps(1) infinite; }
+.thread-mark--cursor { display: flex; justify-content: center; gap: 15px; }
+.thread-mark--thought { letter-spacing: -.2em; padding-right: 9px; }
+.thread-mark--answer { color: #547561; }
+.thread-mini-screen { display: grid; width: 32px; height: 26px; gap: 3px; padding: 5px; border: 1px solid currentColor; border-radius: 3px; }
+.thread-mini-screen i { display: block; height: 3px; background: currentColor; opacity: .65; }
+.thread-mini-screen i:last-child { width: 65%; }
+@keyframes thread-blink { 50% { opacity: 0; } }
+
+@media (max-width: 900px) {
+  .thread-section { padding: 90px 0; }
+  .thread-sticky { position: static; min-height: 0; overflow: visible; }
+  .thread-heading { grid-template-columns: 1fr; gap: 18px; margin-bottom: 50px; }
+  .thread-track { min-height: 0; }
+  .thread-steps { grid-template-columns: 1fr; gap: 30px; padding-left: 18px; }
+  .thread-step, .thread-step:nth-child(even) { display: grid; max-width: none; grid-template-columns: 66px 1fr; column-gap: 22px; margin-top: 0; opacity: 1; }
+  .thread-mark { grid-row: span 3; margin-bottom: 0; }
+  .thread-step h3 { margin-top: 7px; }
+  .thread-step p { max-width: 420px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .thread-section { padding: 90px 0; }
+  .thread-sticky { position: static; min-height: 0; }
+  .thread-step { opacity: 1; transform: none; }
+  .thread-caret { animation: none; }
+}
